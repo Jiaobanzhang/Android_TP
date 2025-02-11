@@ -9,4 +9,5 @@
     <string name="hint_date">JJ/MM/AAAA</string>
     <string name="hint_ville">Entrez votre ville de naissance</string>
     <string name="button_validate">Valider</string>
+    <string name="reset_action">Reset</string>
 </resources>
