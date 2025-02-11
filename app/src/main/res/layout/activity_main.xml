@@ -2,18 +2,92 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="16dp">
 
+    <!-- Nom -->
     <TextView
+        android:id="@+id/text_nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!\nHello World!\nHello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Nom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_nom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Entrez votre nom"
+        app:layout_constraintTop_toBottomOf="@id/text_nom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Prénom -->
+    <TextView
+        android:id="@+id/text_prenom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prénom"
+        app:layout_constraintTop_toBottomOf="@id/edit_nom"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_prenom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Entrez votre prénom"
+        app:layout_constraintTop_toBottomOf="@id/text_prenom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Date de naissance -->
+    <TextView
+        android:id="@+id/text_date_naissance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de naissance"
+        app:layout_constraintTop_toBottomOf="@id/edit_prenom"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_date_naissance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="JJ/MM/AAAA"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@id/text_date_naissance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Ville de naissance -->
+    <TextView
+        android:id="@+id/text_ville_naissance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ville de naissance"
+        app:layout_constraintTop_toBottomOf="@id/edit_date_naissance"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_ville_naissance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Entrez votre ville de naissance"
+        app:layout_constraintTop_toBottomOf="@id/text_ville_naissance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Bouton de validation -->
+    <Button
+        android:id="@+id/button_validate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Valider"
+        app:layout_constraintTop_toBottomOf="@id/edit_ville_naissance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
