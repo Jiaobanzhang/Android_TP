@@ -3,6 +3,7 @@ package fr.imt_atlantique.myfirstappllication;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,10 +73,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // 活动中显示菜单
+    // 6️⃣ 活动中显示菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    // 7️⃣ 处理菜单点击事件
+    public void resetAction(MenuItem item) {
+        EditText editNom = findViewById(R.id.edit_nom);
+        EditText editPrenom = findViewById(R.id.edit_prenom);
+        EditText editDateNaissance = findViewById(R.id.edit_date_naissance);
+        EditText editVilleNaissance = findViewById(R.id.edit_ville_naissance);
+
+        editNom.setText("");
+        editPrenom.setText("");
+        editDateNaissance.setText("");
+        editVilleNaissance.setText("");
+
+        Snackbar.make(findViewById(R.id.myConstraintLayout), "Champs réinitialisés", Snackbar.LENGTH_LONG).show();
     }
 }
