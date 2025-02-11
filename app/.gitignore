@@ -1,0 +1,3 @@
+# 忽略 app 目录的编译产物
+/build/
+.externalNativeBuild/
