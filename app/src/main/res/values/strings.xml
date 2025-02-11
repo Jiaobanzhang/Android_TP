@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">MyFirstAppllication</string>
+    <string name="app_name">Mon Application</string>
+    <string name="label_nom">Nom</string>
+    <string name="label_prenom">Prénom</string>
+    <string name="label_date_naissance">Date de naissance</string>
+    <string name="label_ville_naissance">Ville de naissance</string>
+    <string name="hint_nom">Entrez votre nom</string>
+    <string name="hint_prenom">Entrez votre prénom</string>
+    <string name="hint_date">JJ/MM/AAAA</string>
+    <string name="hint_ville">Entrez votre ville de naissance</string>
+    <string name="button_validate">Valider</string>
 </resources>
