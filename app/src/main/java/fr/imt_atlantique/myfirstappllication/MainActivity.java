@@ -1,5 +1,6 @@
 package fr.imt_atlantique.myfirstappllication;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -16,11 +18,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout phoneContainer; // 用于存放电话号码输入框的 LinearLayout
     private int phoneCount = 0; // 记录已添加的电话号码数量
     private final int MAX_PHONE_COUNT = 5; // 限制最多添加 5 个电话号码
+    private EditText editDateNaissance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonValidate = findViewById(R.id.button_validate);
         EditText editNom = findViewById(R.id.edit_nom);
         EditText editPrenom = findViewById(R.id.edit_prenom);
-        EditText editDateNaissance = findViewById(R.id.edit_date_naissance);
+        editDateNaissance = findViewById(R.id.edit_date_naissance);
         EditText editVilleNaissance = findViewById(R.id.edit_ville_naissance);
         Spinner spinner = findViewById(R.id.spinner_departments);
         // 获取布局中的 phoneContainer 和 "Ajouter un numéro" 按钮
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 // 直接从 Spinner 获取选中项
                 String selectedItem = spinner.getSelectedItem().toString();
 
-                // 4️⃣ 组合显示的信息ii
+                // 4️⃣ 组合显示的信息
                 String message = "Nom: " + nom + "\nPrénom: " + prenom +
                         "\nDate de naissance: " + dateNaissance +
                         "\nVille: " + villeNaissance +
@@ -76,11 +81,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 设置按钮点击监听器
+        // 6️⃣设置 Ajouter un phone 按钮点击监听器
         buttonAddPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addPhoneField();
+            }
+        });
+
+        // 7️⃣设置 DatePicker 按钮的点击事件:
+        editDateNaissance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
         });
     }
@@ -168,5 +181,28 @@ public class MainActivity extends AppCompatActivity {
 
         // 每次添加后显示 `Snackbar`
         Snackbar.make(phoneContainer, "Numéros ajoutés: " + phoneCount, Snackbar.LENGTH_SHORT).show();
+    }
+
+    // 9️⃣ 处理 DatePicker 按钮的点击事件
+    private void showDatePickerDialog() {
+        // 获取当前日期
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // 创建 DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                MainActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // 格式化日期并显示
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        editDateNaissance.setText(selectedDate);
+                    }
+                }, year, month, day);
+
+        datePickerDialog.show();
     }
 }
