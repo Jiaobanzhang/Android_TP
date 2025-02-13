@@ -5,9 +5,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         EditText editPrenom = findViewById(R.id.edit_prenom);
         EditText editDateNaissance = findViewById(R.id.edit_date_naissance);
         EditText editVilleNaissance = findViewById(R.id.edit_ville_naissance);
+        Spinner spinner = findViewById(R.id.spinner_departments);
         // 获取布局中的 phoneContainer 和 "Ajouter un numéro" 按钮
         phoneContainer = findViewById(R.id.phoneContainer);
         Button buttonAddPhone = findViewById(R.id.button_add_phone);
@@ -46,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 String prenom = editPrenom.getText().toString();
                 String dateNaissance = editDateNaissance.getText().toString();
                 String villeNaissance = editVilleNaissance.getText().toString();
+                // 直接从 Spinner 获取选中项
+                String selectedItem = spinner.getSelectedItem().toString();
 
-                // 4️⃣ 组合显示的信息
+                // 4️⃣ 组合显示的信息ii
                 String message = "Nom: " + nom + "\nPrénom: " + prenom +
                         "\nDate de naissance: " + dateNaissance +
-                        "\nVille: " + villeNaissance;
+                        "\nVille: " + villeNaissance +
+                        "\nDepartement: " + selectedItem;
 
                 // 5️⃣ 显示 Snackbar 并添加 DISMISS 按钮
                 // 这段代码可以显示很多行代码
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 View snackbarView = snackbar.getView();
                 // TextView 是 View 的子类，专门用于显示文本
                 TextView snackbarText = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                snackbarText.setMaxLines(5);  // 设置最大显示行数
+                snackbarText.setMaxLines(10);  // 设置最大显示行数
                 snackbar.show();
             }
         });
