@@ -4,6 +4,7 @@
     <string name="label_prenom">Prénom</string>
     <string name="label_date_naissance">Date de naissance</string>
     <string name="label_ville_naissance">Ville de naissance</string>
+    <string name="label_departement_naissance">Departement de naissance</string>
     <string name="hint_nom">Entrez votre nom</string>
     <string name="hint_prenom">Entrez votre prénom</string>
     <string name="hint_date">JJ/MM/AAAA</string>
