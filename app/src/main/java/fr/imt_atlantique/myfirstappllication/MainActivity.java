@@ -22,7 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,40 +54,40 @@ public class MainActivity extends AppCompatActivity {
         Button buttonAddPhone = findViewById(R.id.button_add_phone);
 
         // 2️⃣ 设置按钮的点击事件 (Définir l'événement de clic du bouton)
-        buttonValidate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 3️⃣ 读取用户输入 (Lire la saisie de l'utilisateur)
-                String nom = editNom.getText().toString();
-                String prenom = editPrenom.getText().toString();
-                String dateNaissance = editDateNaissance.getText().toString();
-                String villeNaissance = editVilleNaissance.getText().toString();
-                // 直接从 Spinner 获取选中项 (Obtenir directement l'élément sélectionné depuis le Spinner)
-                String selectedItem = spinner.getSelectedItem().toString();
-
-                // 4️⃣ 组合显示的信息 (Combiner et afficher les informations)
-                String message = "Nom: " + nom + "\nPrénom: " + prenom +
-                        "\nDate de naissance: " + dateNaissance +
-                        "\nVille: " + villeNaissance +
-                        "\nDepartement: " + selectedItem;
-
-                // 5️⃣ 显示 Snackbar 并添加 DISMISS 按钮 (Afficher un Snackbar et ajouter un bouton DISMISS)
-                // 这段代码可以显示很多行代码 (Ce code peut afficher plusieurs lignes de code)
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.myConstraintLayout), message, Snackbar.LENGTH_LONG)
-                        .setAction("DISMISS", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // 关闭 Snackbar
-                            }
-                        });
-                // 让 Snackbar 的文本区域变大，允许多行显示
-                View snackbarView = snackbar.getView();
-                // TextView 是 View 的子类，专门用于显示文本
-                TextView snackbarText = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                snackbarText.setMaxLines(10);  // 设置最大显示行数
-                snackbar.show();
-            }
-        });
+//        buttonValidate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 3️⃣ 读取用户输入 (Lire la saisie de l'utilisateur)
+//                String nom = editNom.getText().toString();
+//                String prenom = editPrenom.getText().toString();
+//                String dateNaissance = editDateNaissance.getText().toString();
+//                String villeNaissance = editVilleNaissance.getText().toString();
+//                // 直接从 Spinner 获取选中项 (Obtenir directement l'élément sélectionné depuis le Spinner)
+//                String selectedItem = spinner.getSelectedItem().toString();
+//
+//                // 4️⃣ 组合显示的信息 (Combiner et afficher les informations)
+//                String message = "Nom: " + nom + "\nPrénom: " + prenom +
+//                        "\nDate de naissance: " + dateNaissance +
+//                        "\nVille: " + villeNaissance +
+//                        "\nDepartement: " + selectedItem;
+//
+//                // 5️⃣ 显示 Snackbar 并添加 DISMISS 按钮 (Afficher un Snackbar et ajouter un bouton DISMISS)
+//                // 这段代码可以显示很多行代码 (Ce code peut afficher plusieurs lignes de code)
+//                Snackbar snackbar = Snackbar.make(findViewById(R.id.myConstraintLayout), message, Snackbar.LENGTH_LONG)
+//                        .setAction("DISMISS", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                // 关闭 Snackbar
+//                            }
+//                        });
+//                // 让 Snackbar 的文本区域变大，允许多行显示
+//                View snackbarView = snackbar.getView();
+//                // TextView 是 View 的子类，专门用于显示文本
+//                TextView snackbarText = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+//                snackbarText.setMaxLines(10);  // 设置最大显示行数
+//                snackbar.show();
+//            }
+//        });
 
         // 6️⃣设置 Ajouter un phone 按钮点击监听器
         // Mise en place de l'écouteur Ajouter un phone button click
@@ -283,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 确保用户输入了城市名称
         if (city.isEmpty()) {
-            Snackbar.make(phoneContainer, "Please enter a city name", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.myConstraintLayout), "Please enter a city name", Snackbar.LENGTH_SHORT).show();
             return;
         }
 
@@ -300,7 +302,53 @@ public class MainActivity extends AppCompatActivity {
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(chooser);
         } else {
-            Snackbar.make(phoneContainer, "No app available to share", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(R.id.myConstraintLayout), "No app available to share", Snackbar.LENGTH_LONG).show();
         }
     }
+
+    // TP4 : 传递 User 对象
+    public void validateForm(View view) {
+        EditText editNom = findViewById(R.id.edit_nom);
+        EditText editPrenom = findViewById(R.id.edit_prenom);
+        EditText editVilleNaissance = findViewById(R.id.edit_ville_naissance);
+        EditText editDateNaissance = findViewById(R.id.edit_date_naissance);
+        Spinner departementSpinner = findViewById(R.id.spinner_departments);
+        LinearLayout phoneContainer = findViewById(R.id.phoneContainer);
+
+        String nom = editNom.getText().toString().trim();
+        String prenom = editPrenom.getText().toString().trim();
+        String villeNaissance = editVilleNaissance.getText().toString().trim();
+        String dateNaissance = editDateNaissance.getText().toString().trim();
+        String departementNaissance = departementSpinner.getSelectedItem().toString();
+
+        List<String> phoneNumbers = new ArrayList<>();
+
+        // 遍历 phoneContainer，查找其中的 LinearLayout，并获取 EditText 的内容
+        for (int i = 0; i < phoneContainer.getChildCount(); i++) {
+            View child = phoneContainer.getChildAt(i);
+
+            if (child instanceof LinearLayout) { // 先检查是不是 LinearLayout
+                LinearLayout phoneRow = (LinearLayout) child;
+
+                for (int j = 0; j < phoneRow.getChildCount(); j++) {
+                    View subChild = phoneRow.getChildAt(j);
+
+                    if (subChild instanceof EditText) { // 这里才是获取输入的电话号码
+                        String phone = ((EditText) subChild).getText().toString().trim();
+                        if (!phone.isEmpty()) {
+                            phoneNumbers.add(phone);
+                        }
+                        break; // 只需要找到第一个 EditText
+                    }
+                }
+            }
+        }
+
+        User user = new User(nom, prenom, villeNaissance, dateNaissance, departementNaissance, phoneNumbers);
+
+        Intent intent = new Intent(this, DisplayUserActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
 }
