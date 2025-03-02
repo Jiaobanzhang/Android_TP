@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editDateNaissance;
 
     private Spinner spinner;
+    private static final int REQUEST_CODE_DATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
         editDateNaissance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog();
+//                showDatePickerDialog();
+                PickDate();
             }
         });
     }
@@ -351,4 +353,33 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TP4 : 隐式启动 DateActivity 并传递当前日期:
+    private void PickDate(){
+        // 使用隐式 Intent 调用 DateActivity
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("vnd.android.cursor.item/date");
+
+        // 检查是否有可以处理这个 Intent 的 Activity，防止崩溃
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CODE_DATE);
+        } else {
+            Toast.makeText(MainActivity.this, "No app can handle this request", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_DATE) {
+            if (resultCode == RESULT_OK && data != null) {
+                // 获取用户选择的日期
+                String selectedDate = data.getStringExtra("SELECTED_DATE");
+                editDateNaissance.setText(selectedDate);
+            } else if (resultCode == RESULT_CANCELED) {
+                // 用户取消选择日期
+                Toast.makeText(this, "Date selection canceled", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

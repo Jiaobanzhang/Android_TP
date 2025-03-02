@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayUserActivity" />
+        <activity android:name=".DateActivity" android:exported="true">
+            <intent-filter>
+                <!-- 允许其他应用或组件使用 ACTION_PICK 来调用 DateActivity -->
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- 指定数据类型（这里是日期选择） -->
+                <data android:mimeType="vnd.android.cursor.item/date" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
