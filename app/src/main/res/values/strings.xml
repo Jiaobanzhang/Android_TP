@@ -12,4 +12,5 @@
     <string name="button_validate">Valider</string>
     <string name="reset_action">Reset</string>
     <string name="search_wikipedia">Search</string>
+    <string name="share_city">Share</string>
 </resources>

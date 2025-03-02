@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
@@ -229,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // TP4 : menu 的两个按钮 + 隐形 intent:
+    // TP4 : menu 的两个按钮 + 隐形 intent + 共享城市 share:
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -239,6 +240,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.search_wikipedia) {
             searchWikipedia(item);
+            return true;
+        } else if (id == R.id.share) {
+            shareCity(item);
             return true;
         }
 
@@ -269,6 +273,34 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent); // 启动浏览器
         } else {
             Snackbar.make(phoneContainer, "No application can handle this request", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    // TP4 : 隐形 intent 实现共享城市:
+    public void shareCity(MenuItem item) {
+        spinner = findViewById(R.id.spinner_departments);
+        String city = spinner.getSelectedItem().toString();
+
+        // 确保用户输入了城市名称
+        if (city.isEmpty()) {
+            Snackbar.make(phoneContainer, "Please enter a city name", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 创建分享 Intent
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain"); // 设定 MIME 类型
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this city: " + city);
+        // 确保邮件应用有标题
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Interesting City Info");
+
+        // 强制用户选择应用（即使有默认应用）
+        Intent chooser = Intent.createChooser(shareIntent, "Share via");
+        // 检查是否有可用的应用
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(chooser);
+        } else {
+            Snackbar.make(phoneContainer, "No app available to share", Snackbar.LENGTH_LONG).show();
         }
     }
 }

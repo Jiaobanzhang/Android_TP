@@ -13,6 +13,12 @@
         android:id="@+id/search_wikipedia"
         android:title="@string/search_wikipedia"
         app:showAsAction="never"/>
+
+    <!-- 添加一个新的共享菜单项 -->
+    <item
+        android:id="@+id/share"
+        android:title="@string/share_city"
+        app:showAsAction="never"/>
 </menu>
 
 
