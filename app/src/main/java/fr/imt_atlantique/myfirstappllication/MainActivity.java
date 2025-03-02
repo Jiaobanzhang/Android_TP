@@ -170,10 +170,16 @@ public class MainActivity extends AppCompatActivity {
                 1 // 权重为 1，让 EditText 占据大部分空间
         ));
 
+        // 创建拨号☎️按钮:
+        Button callButton = new Button(this);
+        callButton.setText("📞");
+        // 设置拨号按钮点击事件
+        callButton.setOnClickListener(v -> callPhoneNumber(phoneInput.getText().toString()));
+
         // 创建删除按钮
         // Créer un bouton de suppression
         Button deleteButton = new Button(this);
-        deleteButton.setText("Supprimer");
+        deleteButton.setText("❌");
         deleteButton.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -196,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         // Ajout des boutons EditText et Delete à LinearLayout
         phoneRow.addView(phoneInput);
         phoneRow.addView(deleteButton);
+        phoneRow.addView(callButton);
 
         // 将整行（包含 EditText 和按钮）添加到 phoneContainer
         // Ajoute la ligne entière (y compris l'EditText et le bouton) au phoneContainer.
@@ -380,6 +387,23 @@ public class MainActivity extends AppCompatActivity {
                 // 用户取消选择日期
                 Toast.makeText(this, "Date selection canceled", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    public void callPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            Toast.makeText(this, "Veuillez entrer un numéro de téléphone", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+        dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+
+        // 检查是否有应用可以处理该 Intent
+        if (dialIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(dialIntent);
+        } else {
+            Toast.makeText(this, "Aucune application de numérotation trouvée", Toast.LENGTH_SHORT).show();
         }
     }
 }
